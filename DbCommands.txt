@@ -1,0 +1,30 @@
+dotnet ef dbcontext scaffold "Server=localhost;Port=3333;User=root;Password=;Database=Api1Db" "Pomelo.EntityFrameworkCore.MySql"
+
+
+For Api1(mysql):
+
+create database Api1Db;
+
+create Table Categories
+(
+  Id int not null AUTO_INCREMENT,
+  Name varchar(30) not null,
+  Primary Key(Id)
+);
+
+create Table Products
+(
+  Id int not null AUTO_INCREMENT,
+  Name varchar(30) not null,
+  Cost double not null,
+  CategoryId int not null,
+  Primary Key(Id),
+  Constraint FK_CategoryId Foreign Key(CategoryId)
+  References Categories(Id)
+);
+
+Insert into Categories(Name) values("Shampoo");
+Insert into Products(Name,Cost,CategoryId) values("Head & Shoulders",2,1);
+
+
+

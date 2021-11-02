@@ -1,4 +1,7 @@
-﻿using Api1DataAccess.EFCore;
+﻿using Api1Business.Models.Commands.Product;
+using Api1Business.Models.Queries.Product;
+using Api1DataAccess.EFCore;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,17 +15,36 @@ namespace Api1.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        public ProductController(Api1DataAccess.EFCore.Api1DbContext con)  
+        public IMediator Mediator { get; set; }
+        public ProductController(IMediator Mediator)
         {
-            Con = con;
+            this.Mediator = Mediator;
         }
 
-        public Api1DbContext Con { get; }
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [Route("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var list = await Con.Products.ToListAsync();
-            return Ok(list);
+            var res = await Mediator.Send(new GetProductByIdQuery(id));
+            return Ok(res);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateProductCommand command)
+        {
+            var res = await Mediator.Send(command);
+            return Ok(res);
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateProductCommand command)
+        {
+            var res = await Mediator.Send(command);
+            return Ok(res);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(DeleteProductCommand command)
+        {
+            var res = await Mediator.Send(command);
+            return Ok(res);
         }
     }
 }

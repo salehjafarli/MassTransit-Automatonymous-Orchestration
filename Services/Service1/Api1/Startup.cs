@@ -30,6 +30,7 @@ namespace Api1
         {
             services.AddEFMysql(Configuration);
             services.AddMediatR(typeof(CreateProductHandler));
+            services.InjectMassTransit();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

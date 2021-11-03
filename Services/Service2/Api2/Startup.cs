@@ -1,3 +1,5 @@
+using Api2DataAccess.Repos.Abstract;
+using Api2DataAccess.Repos.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +27,8 @@ namespace Api2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            var constring = Configuration.GetConnectionString("postgres");
+            services.AddScoped<ICompanyRepository>(x=> new CompanyRepository(constring));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -36,6 +39,7 @@ namespace Api2
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

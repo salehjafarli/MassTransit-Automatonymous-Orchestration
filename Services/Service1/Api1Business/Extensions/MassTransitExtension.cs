@@ -12,7 +12,11 @@ namespace Api1Business.Extensions
     {
         public static void InjectMassTransit(this IServiceCollection Services)
         {
-            Services.AddMassTransit(x =>x.UsingRabbitMq());
+            Services.AddMassTransit(x => x.AddBus(c => Bus.Factory.CreateUsingRabbitMq(cfg => 
+            {
+                cfg.Host("rabbitmq://localhost");
+            })));
+            
             Services.AddMassTransitHostedService(); 
         }
     }

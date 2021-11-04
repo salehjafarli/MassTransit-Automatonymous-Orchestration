@@ -1,19 +1,22 @@
 ﻿using Api2DataAccess.Entities;
 using Api2DataAccess.Repos.Abstract;
 using Dapper;
+using Dapper.FluentMap;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Api2DataAccess.Repos.Concrete
 {
-    public class CompanyRepository : BaseRepository, ICompanyRepository
+    public class CompanyRepository : BaseRepository<Company>, ICompanyRepository
     {
         public CompanyRepository(string ConString) : base(ConString,"Companies")
         {
+          
         }
 
         public async Task<bool> Create(Company entity)
@@ -21,7 +24,8 @@ namespace Api2DataAccess.Repos.Concrete
             string sql = InsertCommand(typeof(Company));
             using (var con = new NpgsqlConnection(ConString))
             {
-                return await con.ExecuteAsync(sql,entity) ==1;
+
+                return await con.ExecuteAsync(sql,entity)==1;
             }
            
             
@@ -41,7 +45,7 @@ namespace Api2DataAccess.Repos.Concrete
         {
             string sql =Get;
             using (var con = new NpgsqlConnection(ConString))
-            {
+            { 
                 return await con.QueryAsync<Company>(sql);
             }
         }

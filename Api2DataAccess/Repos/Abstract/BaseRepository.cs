@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Api2DataAccess.Repos.Abstract
 {
-    public abstract class BaseRepository
+    public abstract class BaseRepository<T>
     {
         public BaseRepository(string ConString, string TableName)
         {
@@ -30,10 +32,10 @@ namespace Api2DataAccess.Repos.Abstract
             foreach (var item in props)
             {
                 var name = item.Name;
-                if (name.ToLower() != "id")
+                if (!name.ToLower().Contains("id"))
                 {
                     qp1 += name + ",";
-                    qp2 += "@"+name + ",";
+                    qp2 += "@" + name + ",";
                 }
             }
             qp1 = qp1.Remove(qp1.Length - 1);
@@ -48,7 +50,7 @@ namespace Api2DataAccess.Repos.Abstract
             foreach (var item in props)
             {
                 var name = item.Name;
-                if (name.ToLower() != "id")
+                if (!name.ToLower().Contains("id"))
                 {
                     qp1 += name + ",";
                     qp2 += $"{name} = @{name},";

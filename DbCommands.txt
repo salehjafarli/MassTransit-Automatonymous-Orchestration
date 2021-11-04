@@ -32,38 +32,38 @@ Insert into Products(Name,Cost,CategoryId) values("Head & Shoulders",2,1);
 For Api2(Postgres) :
 
 create table Companies(
-Id int not null generated always as identity,
-Name varchar(30) not null,
-Primary key(Id)
+CompanyId int not null generated always as identity,
+CompanyName varchar(30) not null,
+Primary key(CompanyId)
 );
 create Table Categories(
-  Id int not null generated always as identity,
-  Name varchar(30) not null,
-  Primary key(Id)
+  CategoryId int not null generated always as identity,
+  CategoryName varchar(30) not null,
+  Primary key(CategoryId)
 );
 create Table Products
 (
-  Id int not null generated always as identity,
-  Name varchar(30) not null,
-  Cost DOUBLE PRECISION not null,
+  ProductId int not null generated always as identity,
+  ProductName varchar(30) not null,
+  ProductCost DOUBLE PRECISION not null,
   CategoryId int not null,
-  Primary key(Id),
-  Constraint Fk_CategoryId Foreign key(CategoryId) references Categories(Id)
+  Primary key(ProductId),
+  Constraint Fk_CategoryId Foreign key(CategoryId) references Categories(CategoryId)
 );
 create table Warehouses(
-  Id int not null generated always as identity,
-  Name varchar(30) not null,
-  Address varchar(60) not null,
+  WarehouseId int not null generated always as identity,
+  WarehouseName varchar(30) not null,
+  WarehouseAddress varchar(60) not null,
   CompanyId int not null,
-  Primary key(Id),
-  Constraint Fk_CompanyId Foreign key(CompanyId) references Companies(Id)
+  Primary key(WarehouseId),
+  Constraint Fk_CompanyId Foreign key(CompanyId) references Companies(CompanyId)
 );
 create table WarehouseData(
   WarehouseId int not null,
   ProductId int not null,
   PRIMARY KEY (WarehouseId,ProductId),
-  Constraint Fk_WarehouseId Foreign key(WarehouseId) references Warehouses(Id),
-  Constraint Fk_ProductId Foreign key(ProductId) references Products(Id)
+  Constraint Fk_WarehouseId Foreign key(WarehouseId) references Warehouses(WarehouseId),
+  Constraint Fk_ProductId Foreign key(ProductId) references Products(ProductId)
 );
 
 

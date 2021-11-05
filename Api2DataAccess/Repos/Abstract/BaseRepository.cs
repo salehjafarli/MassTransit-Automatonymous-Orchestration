@@ -8,25 +8,31 @@ using System.Threading.Tasks;
 
 namespace Api2DataAccess.Repos.Abstract
 {
-    public abstract class BaseRepository<T>
+    public abstract class BaseRepository
     {
-        public BaseRepository(string ConString, string TableName)
+        public BaseRepository(string ConString, string TableName,Type EntityType)
         {
             this.ConString = ConString;
             this.TableName = TableName;
+            this.EntityType = EntityType;
         }
 
         public string ConString { get; }
         public string TableName { get; }
+        public Type EntityType { get; }
 
-        public string GetByIdQuery => $"{Get} where Id = @Id";
+        public string GetByIdQuery => $"{Get} where {EntityType.Name}Id = @Id";
 
         public string Get => $"Select * From {TableName}";
-        public string DeleteCommand => $"Delete from {TableName} where Id = @Id";
+        public string DeleteCommand => $"Delete from {TableName} where {EntityType.Name}Id = @Id";
 
-        public string InsertCommand(Type entitype)
+        //insert into 
+
+        public string MyProperty { get; set; }
+
+        public string InsertCommand()
         {
-            var props = entitype.GetProperties();
+            var props = EntityType.GetProperties();
             string qp1 = "";
             string qp2 = "";
             foreach (var item in props)
@@ -42,9 +48,9 @@ namespace Api2DataAccess.Repos.Abstract
             qp2 = qp2.Remove(qp2.Length - 1);
             return $"Insert into {TableName}({qp1}) values({qp2})";
         }
-        public string UpdateCommand(Type entitype)
+        public string UpdateCommand()
         {
-            var props = entitype.GetProperties();
+            var props = EntityType.GetProperties();
             string qp1 = "";
             string qp2 = "";
             foreach (var item in props)
@@ -60,5 +66,7 @@ namespace Api2DataAccess.Repos.Abstract
             qp2 = qp2.Remove(qp2.Length - 1);
             return $"Update {TableName} Set {qp2} where Id = @Id";
         }
+
+
     }
 }

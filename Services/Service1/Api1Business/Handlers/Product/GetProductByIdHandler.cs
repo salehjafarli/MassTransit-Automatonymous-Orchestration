@@ -1,9 +1,9 @@
 ﻿using Api1Business.Models.Queries.Product;
-using Api1Business.Models.Response;
 using Api1DataAccess.EFCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using Services.Common.Models.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;

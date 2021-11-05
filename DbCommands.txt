@@ -53,7 +53,7 @@ create Table Products
 create table Warehouses(
   WarehouseId int not null generated always as identity,
   WarehouseName varchar(30) not null,
-  WarehouseAddress varchar(60) not null,
+  WarehouseAdress varchar(60) not null,
   CompanyId int not null,
   Primary key(WarehouseId),
   Constraint Fk_CompanyId Foreign key(CompanyId) references Companies(CompanyId)

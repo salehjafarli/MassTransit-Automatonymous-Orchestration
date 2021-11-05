@@ -12,16 +12,16 @@ using System.Threading.Tasks;
 
 namespace Api2DataAccess.Repos.Concrete
 {
-    public class CompanyRepository : BaseRepository<Company>, ICompanyRepository
+    public class CompanyRepository : BaseRepository, ICompanyRepository
     {
-        public CompanyRepository(string ConString) : base(ConString,"Companies")
+        public CompanyRepository(string ConString) : base(ConString,"Companies",typeof(Company))
         {
           
         }
 
         public async Task<bool> Create(Company entity)
         {
-            string sql = InsertCommand(typeof(Company));
+            string sql = InsertCommand();
             using (var con = new NpgsqlConnection(ConString))
             {
 
@@ -62,7 +62,7 @@ namespace Api2DataAccess.Repos.Concrete
 
         public async Task<bool> Update(Company entity)
         {
-            string sql = UpdateCommand(typeof(Company));
+            string sql = UpdateCommand();
             using (var con = new NpgsqlConnection(ConString))
             {
                 return await con.ExecuteAsync(sql, entity) == 1;

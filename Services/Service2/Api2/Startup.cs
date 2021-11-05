@@ -1,3 +1,4 @@
+using Api2Business.Handlers.Company;
 using Api2DataAccess.Repos.Abstract;
 using Api2DataAccess.Repos.Concrete;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 
 namespace Api2
 {
@@ -28,7 +30,10 @@ namespace Api2
         public void ConfigureServices(IServiceCollection services)
         {
             var constring = Configuration.GetConnectionString("postgres");
+            services.AddMediatR(typeof(GetCompanyByIdHandler));
             services.AddScoped<ICompanyRepository>(x=> new CompanyRepository(constring));
+            services.AddScoped<IWarehouseRepository>(x => new WarehouseRepository(constring));
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

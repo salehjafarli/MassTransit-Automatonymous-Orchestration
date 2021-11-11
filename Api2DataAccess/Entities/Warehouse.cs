@@ -14,10 +14,10 @@ namespace Api2DataAccess.Entities
         {
             Products = new List<Product>();
         }
-        public int WarehouseId { get; set; }
-        public string WarehouseName { get; set; }
-        public string WarehouseAdress { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Adress { get; set; }
         public Company Company { get; set; }
-        public List<Product> Products { get; set; } 
+        public List<Product> Products { get; set; }
     }
 }

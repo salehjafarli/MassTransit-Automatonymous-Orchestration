@@ -1,4 +1,6 @@
-﻿using Api2Business.Models.Comands.Company;
+﻿using Api2Business.Models.Comands;
+using Api2Business.Models.Comands.Company;
+using Api2Business.Models.Queries;
 using Api2Business.Models.Queries.Company;
 using Api2DataAccess.Entities;
 using Api2DataAccess.Repos.Abstract;
@@ -23,17 +25,17 @@ namespace Api2.Controllers
         }
 
         public IMediator Mediator { get; }
-        //[HttpGet]
-        //public async Task<IActionResult> Get()
-        //{
-        //    var res = await Repo.GetAll();
-        //    return Ok(res);
-        //}
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var res = await Mediator.Send(new GetCompanyByIdQuery() { Id = id });
+            var res = await Mediator.Send(new GetCompanyByIdQuery(id));
+            return Ok(res);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var res = await Mediator.Send(new GetAllCompanyQuery());
             return Ok(res);
         }
 
@@ -50,7 +52,7 @@ namespace Api2.Controllers
             return Ok(res);
         }
         [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteCompanyCommand c)
+        public async Task<IActionResult> Delete(CommonDeleteCommand c)
         {
             var res = await Mediator.Send(c);
             return Ok(res);

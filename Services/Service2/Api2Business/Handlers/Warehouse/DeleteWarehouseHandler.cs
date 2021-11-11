@@ -1,5 +1,4 @@
 ﻿using Api2Business.Models.Comands;
-using Api2Business.Models.Comands.Company;
 using Api2DataAccess.Repos.Abstract;
 using MediatR;
 using System;
@@ -9,16 +8,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Api2Business.Handlers.Company
+namespace Api2Business.Handlers.Warehouse
 {
-    public class DeleteCompanyHandler : IRequestHandler<CommonDeleteCommand, bool>
+    public class DeleteWarehouseHandler : IRequestHandler<CommonDeleteCommand,bool>
     {
-        public DeleteCompanyHandler(ICompanyRepository Repo)
+        public DeleteWarehouseHandler(IWarehouseRepository Repo)
         {
             this.Repo = Repo;
         }
 
-        public ICompanyRepository Repo { get; }
+        public IWarehouseRepository Repo { get; }
+
         public async Task<bool> Handle(CommonDeleteCommand request, CancellationToken cancellationToken)
         {
             return await Repo.Delete(request.Id);

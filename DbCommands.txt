@@ -32,38 +32,38 @@ Insert into Products(Name,Cost,CategoryId) values("Head & Shoulders",2,1);
 For Api2(Postgres) :
 
 create table Companies(
-CompanyId int not null generated always as identity,
-CompanyName varchar(30) not null,
-Primary key(CompanyId)
+Company_Id int not null generated always as identity,
+Company_Name varchar(30) not null,
+Primary key(Company_Id)
 );
 create Table Categories(
-  CategoryId int not null generated always as identity,
-  CategoryName varchar(30) not null,
-  Primary key(CategoryId)
+  Category_Id int not null generated always as identity,
+  Category_Name varchar(30) not null,
+  Primary key(Category_Id)
 );
 create Table Products
 (
-  ProductId int not null generated always as identity,
-  ProductName varchar(30) not null,
-  ProductCost DOUBLE PRECISION not null,
-  CategoryId int not null,
-  Primary key(ProductId),
-  Constraint Fk_CategoryId Foreign key(CategoryId) references Categories(CategoryId)
+  Product_Id int not null generated always as identity,
+  Product_Name varchar(30) not null,
+  Product_Cost DOUBLE PRECISION not null,
+  Category_Id int not null,
+  Primary key(Product_Id),
+  Constraint Fk_CategoryId Foreign key(Category_Id) references Categories(Category_Id)
 );
 create table Warehouses(
-  WarehouseId int not null generated always as identity,
-  WarehouseName varchar(30) not null,
-  WarehouseAdress varchar(60) not null,
-  CompanyId int not null,
-  Primary key(WarehouseId),
-  Constraint Fk_CompanyId Foreign key(CompanyId) references Companies(CompanyId)
+  Warehouse_Id int not null generated always as identity,
+  Warehouse_Name varchar(30) not null,
+  Warehouse_Adress varchar(60) not null,
+  Company_Id int not null,
+  Primary key(Warehouse_Id),
+  Constraint Fk_CompanyId Foreign key(Company_Id) references Companies(Company_Id)
 );
 create table WarehouseData(
-  WarehouseId int not null,
-  ProductId int not null,
-  PRIMARY KEY (WarehouseId,ProductId),
-  Constraint Fk_WarehouseId Foreign key(WarehouseId) references Warehouses(WarehouseId),
-  Constraint Fk_ProductId Foreign key(ProductId) references Products(ProductId)
+  Warehouse_Id int not null,
+  Product_Id int not null,
+  PRIMARY KEY (Warehouse_Id,Product_Id),
+  Constraint Fk_Warehouse_Id Foreign key(Warehouse_Id) references Warehouses(Warehouse_Id),
+  Constraint Fk_ProductId Foreign key(Product_Id) references Products(Product_Id)
 );
 
 

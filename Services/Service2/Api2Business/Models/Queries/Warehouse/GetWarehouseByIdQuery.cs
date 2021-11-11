@@ -10,6 +10,10 @@ namespace Api2Business.Models.Queries.Warehouse
 {
     public class GetWarehouseByIdQuery : IRequest<WarehouseResponse>
     {
+        public GetWarehouseByIdQuery(int Id)
+        {
+            this.Id = Id;
+        }
         public int Id { get; set; }
     }
 }

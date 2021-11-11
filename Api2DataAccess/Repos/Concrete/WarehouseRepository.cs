@@ -1,4 +1,5 @@
 ﻿using Api2DataAccess.Entities;
+using Api2DataAccess.Helpers;
 using Api2DataAccess.Repos.Abstract;
 using Dapper;
 using Npgsql;
@@ -11,77 +12,101 @@ using System.Threading.Tasks;
 
 namespace Api2DataAccess.Repos.Concrete
 {
-    class WarehouseData
-    {
-        public int WarehouseId { get; set; }
-        public int ProductId { get; set; }
-    }
     
 
     public class WarehouseRepository :BaseRepository, IWarehouseRepository
     {
         public WarehouseRepository(string ConString) : base(ConString,"Warehouses",typeof(Warehouse))
         {
+            DapperCustomMap.SetFor<Category>();
+            DapperCustomMap.SetFor<Product>();
+            DapperCustomMap.SetFor<Company>();
+            DapperCustomMap.SetFor<Warehouse>();
+
 
         }
         public async Task<bool> Create(Warehouse entity)
         {
-            var sql = InsertCommand();
+            var sql = InsertCommand("company,products");
             using (var conn = new NpgsqlConnection())
             {
                 return true;
             }
         }
+        public Task<bool> Update(Warehouse entity)
+        {
+            throw new NotImplementedException();
+        }
 
         public Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            string sql = DeleteCommand;
+            using (var conn = new NpgsqlConnection())
+            {
+                return Task.FromResult(conn.ExecuteAsync(sql,new { Id = id}).Result ==1);
+            }
         }
 
         public async Task<IEnumerable<Warehouse>> GetAll()
         {
 
-            string sql = @"Select w.*,c.CompanyName,p.*,cat.CategoryName from WarehouseData as wd
-                            inner join Warehouses as w on w.WarehouseId = wd.WarehouseId 
-                            inner join Companies as c on w.CompanyId = c.CompanyId
-                            inner join Products as p on wd.ProductId = p.ProductId
-                            inner join Categories as cat on p.CategoryId = cat.CategoryId
+            string sql = @"Select w.*,c.company_name,p.*,cat.category_name from WarehouseData as wd
+                            inner join Warehouses as w on w.Warehouse_Id = wd.Warehouse_Id 
+                            inner join Companies as c on w.Company_Id = c.Company_Id
+                            inner join Products as p on wd.Product_Id = p.Product_Id
+                            inner join Categories as cat on p.Category_Id = cat.Category_Id
                             ";
             using (var conn = new NpgsqlConnection(ConString))
             {
-                var dic = new Dictionary<int, Warehouse>();
                 var res = conn.Query<Warehouse, Company, Product, Category, Warehouse>(sql, (w, c, p, cat) =>
                     {
-                        
-                        if (dic.ContainsKey(w.WarehouseId))
-                        {
-                            p.Category = cat;
-                            dic[w.WarehouseId].Products.Add(p);
-                        }
-                        else
-                        {
-                            w.Company = c;
-                            p.Category = cat;
-                            w.Products.Add(p);
-                            dic.Add(w.WarehouseId, w);
-                        }
-                        
-                        
+                        w.Company = c;
+                        p.Category = cat;
+                        w.Products.Add(p);
                         return w;
-                    }, splitOn: "CompanyId,ProductId,CategoryId");
-                return dic.Select(x => x.Value).ToList();
+                    }, splitOn: "Company_Id,Product_Id,Category_Id");
+
+                res = res.GroupBy(x => x.Id)
+                      .Select(x => 
+                      {
+                          var first = x.First();
+                          first.Products = x.Select(x => x.Products.FirstOrDefault()).ToList();
+                          return first;
+                      });
+                return res;
             }
         }
         
 
         public Task<Warehouse> GetById(int id)
         {
-            throw new NotImplementedException();
+            string sql = @"Select w.*,c.company_name,p.*,cat.category_name from WarehouseData as wd
+                            inner join Warehouses as w on w.Warehouse_Id = wd.Warehouse_Id 
+                            inner join Companies as c on w.Company_Id = c.Company_Id
+                            inner join Products as p on wd.Product_Id = p.Product_Id
+                            inner join Categories as cat on p.Category_Id = cat.Category_Id
+                            where w.warehouse_id =@Id
+                            ";
+            using (var conn = new NpgsqlConnection(ConString))
+            {
+                var res = conn.Query<Warehouse, Company, Product, Category, Warehouse>(sql, (w, c, p, cat) =>
+                {
+                    w.Company = c;
+                    p.Category = cat;
+                    w.Products.Add(p);
+                    return w;
+                }, splitOn: "Company_Id,Product_Id,Category_Id",param: new {Id = id });
+
+                var result = res.GroupBy(x => x.Id)
+                      .Select(x =>
+                      {
+                          var first = x.First();
+                          first.Products = x.Select(x => x.Products.FirstOrDefault()).ToList();
+                          return first;
+                      }).FirstOrDefault();
+                return Task.FromResult(result);
+            }
         }
 
-        public Task<bool> Update(Warehouse entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

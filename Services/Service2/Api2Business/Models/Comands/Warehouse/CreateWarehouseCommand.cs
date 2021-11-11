@@ -9,5 +9,8 @@ namespace Api2Business.Models.Comands.Warehouse
 {
     public class CreateWarehouseCommand : IRequest<bool>
     {
+        public string Name { get; set; }
+        public string Adress { get; set; }
+        public int CompanyId { get; set; }
     }
 }

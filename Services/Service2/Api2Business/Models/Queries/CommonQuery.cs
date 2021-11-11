@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api2Business.Models.Comands.Company
+namespace Api2Business.Models.Queries
 {
-    public class DeleteCompanyCommand : IRequest<bool>
+    public class CommonQuery<T> : IRequest<ICollection<T>>
     {
-        public int Id { get; set; }
     }
 }

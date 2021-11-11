@@ -1,4 +1,5 @@
 ﻿using Api2DataAccess.Entities;
+using Api2DataAccess.Helpers;
 using Api2DataAccess.Repos.Abstract;
 using Dapper;
 using Dapper.FluentMap;
@@ -16,7 +17,7 @@ namespace Api2DataAccess.Repos.Concrete
     {
         public CompanyRepository(string ConString) : base(ConString,"Companies",typeof(Company))
         {
-          
+            DapperCustomMap.SetFor<Company>();
         }
 
         public async Task<bool> Create(Company entity)

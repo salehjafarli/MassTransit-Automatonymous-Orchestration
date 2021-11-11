@@ -19,6 +19,7 @@ namespace Api2Business.Handlers.Company
         public GetCompanyByIdHandler(ICompanyRepository Repo)
         {
             this.Repo = Repo;
+            TinyMapper.Bind<Api2DataAccess.Entities.Company, CompanyResponse>();
         }
 
         public ICompanyRepository Repo { get; }
@@ -27,11 +28,7 @@ namespace Api2Business.Handlers.Company
         {
             var entity = await Repo.GetById(request.Id);
             if (entity is null) return null;
-            var response = new CompanyResponse()
-            {
-                Id = entity.CompanyId,
-                Name = entity.CompanyName
-            };
+            var response = TinyMapper.Map<CompanyResponse>(entity);
             return response;
         }
     }

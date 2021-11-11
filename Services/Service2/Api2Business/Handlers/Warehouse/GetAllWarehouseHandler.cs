@@ -1,5 +1,4 @@
 ﻿using Api2Business.Models.Queries.Warehouse;
-using Api2DataAccess.Entities;
 using Api2DataAccess.Repos.Abstract;
 using MediatR;
 using Nelibur.ObjectMapper;
@@ -11,12 +10,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace Api2Business.Handlers.Warehouse
 {
-    class GetWarehouseByIdHandler : IRequestHandler<GetWarehouseByIdQuery, WarehouseResponse>
+    public class GetAllWarehouseHandler : IRequestHandler<GetAllWarehouseQuery, ICollection<WarehouseResponse>>
     {
-        public GetWarehouseByIdHandler(IWarehouseRepository Repo)
+        public GetAllWarehouseHandler(IWarehouseRepository Repo)
         {
             this.Repo = Repo;
             TinyMapper.Bind<Api2DataAccess.Entities.Warehouse, WarehouseResponse>();
@@ -24,10 +22,15 @@ namespace Api2Business.Handlers.Warehouse
 
         public IWarehouseRepository Repo { get; }
 
-        public async Task<WarehouseResponse> Handle(GetWarehouseByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ICollection<WarehouseResponse>> Handle(GetAllWarehouseQuery request, CancellationToken cancellationToken)
         {
-            var entity = await Repo.GetById(request.Id);
-            return TinyMapper.Map<WarehouseResponse>(entity);
+            var data = await Repo.GetAll();
+            var res =new  List<WarehouseResponse>();
+            foreach (var item in data)
+            {
+                res.Add(TinyMapper.Map<WarehouseResponse>(item));
+            }
+            return res;
         }
     }
 }

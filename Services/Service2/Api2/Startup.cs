@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Api2Business.Extensions;
 
 namespace Api2
 {
@@ -33,7 +34,8 @@ namespace Api2
             services.AddMediatR(typeof(GetCompanyByIdHandler));
             services.AddScoped<ICompanyRepository>(x=> new CompanyRepository(constring));
             services.AddScoped<IWarehouseRepository>(x => new WarehouseRepository(constring));
-
+            services.AddScoped<ICategoryRepository>(x => new CategoryRepository(constring));
+            services.InjectMassTransit();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -27,7 +27,7 @@ namespace Api2Business.Handlers.Warehouse
         public async Task<WarehouseResponse> Handle(GetWarehouseByIdQuery request, CancellationToken cancellationToken)
         {
             var entity = await Repo.GetById(request.Id);
-            return TinyMapper.Map<WarehouseResponse>(entity);
+            return  entity is null ? null : TinyMapper.Map<WarehouseResponse>(entity);
         }
     }
 }

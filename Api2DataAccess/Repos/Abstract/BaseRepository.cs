@@ -30,9 +30,11 @@ namespace Api2DataAccess.Repos.Abstract
 
         public string MyProperty { get; set; }
 
-        public string InsertCommand(string exprops = null)
+        public string InsertCommand(string exprops = null,string inprops = null)
         {
             string[] excluded = exprops is null ? new string[0] : exprops.Split(",");
+            string[] included = inprops is null ? new string[0] : inprops.Split(",");
+
             var props = EntityType.GetProperties();
             string qp1 = "";
             string qp2 = "";
@@ -46,13 +48,21 @@ namespace Api2DataAccess.Repos.Abstract
                     qp2 += "@" + name2 + ",";
                 }
             }
+            foreach (var item in included)
+            {
+                var name = /*$"{EntityType.Name}_{item}"*/ item;
+                var name2 = /*$"{item}"*/ item;
+                qp1 += name + ",";
+                qp2 += "@" + name2 + ",";
+            }
             qp1 = qp1.Remove(qp1.Length - 1);
             qp2 = qp2.Remove(qp2.Length - 1);
             return $"Insert into {TableName}({qp1}) values({qp2})";
         }
-        public string UpdateCommand(string exprops = null)
+        public string UpdateCommand(string exprops = null,string inprops = null)
         {
             string[] excluded = exprops is null ? new string[0] : exprops.Split(",");
+            string[] included = inprops is null ? new string[0] : inprops.Split(",");
 
             var props = EntityType.GetProperties();
             string qp = "";
@@ -64,6 +74,12 @@ namespace Api2DataAccess.Repos.Abstract
                 {
                     qp += $"{name} = @{name2},";
                 }
+            }
+            foreach (var item in included)
+            {
+                var name = /*$"{EntityType.Name}_{item}"*/ item;
+                var name2 = /*$"{item}"*/ item;
+                qp += $"{name} = @{name2},";
             }
             qp = qp.Remove(qp.Length - 1);
             return $"Update {TableName} Set {qp} where {EntityType.Name}_id = @Id";

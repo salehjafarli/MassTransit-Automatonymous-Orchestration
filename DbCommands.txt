@@ -60,7 +60,7 @@ create table Warehouses(
 );
 create table WarehouseData(
   Warehouse_Id int not null,
-  Product_Id int not null,
+  Product_Id int,
   PRIMARY KEY (Warehouse_Id,Product_Id),
   Constraint Fk_Warehouse_Id Foreign key(Warehouse_Id) references Warehouses(Warehouse_Id),
   Constraint Fk_ProductId Foreign key(Product_Id) references Products(Product_Id)

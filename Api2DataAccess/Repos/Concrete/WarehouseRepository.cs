@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Api2DataAccess.Repos.Concrete
 {
-    
 
-    public class WarehouseRepository :BaseRepository, IWarehouseRepository
+
+    public class WarehouseRepository : BaseRepository, IWarehouseRepository
     {
-        public WarehouseRepository(string ConString) : base(ConString,"Warehouses",typeof(Warehouse))
+        public WarehouseRepository(string ConString) : base(ConString, "Warehouses", typeof(Warehouse))
         {
             DapperCustomMap.SetFor<Category>();
             DapperCustomMap.SetFor<Product>();
@@ -25,25 +25,36 @@ namespace Api2DataAccess.Repos.Concrete
 
 
         }
-        public async Task<bool> Create(Warehouse entity)
+        public Task<bool> Create(Warehouse entity)
         {
-            var sql = InsertCommand("company,products");
-            using (var conn = new NpgsqlConnection())
+            var sql = InsertCommand("company,products", "company_id");
+            using (var conn = new NpgsqlConnection(ConString))
             {
-                return true;
+                bool res1 = conn.Execute(sql,
+                new
+                {
+                    name = entity.Name,
+                    adress = entity.Adress,
+                    company_id = entity.Company.Id
+                }) == 1;
+                return Task.FromResult(res1);
             }
         }
         public Task<bool> Update(Warehouse entity)
         {
-            throw new NotImplementedException();
+            var sql = UpdateCommand("company,products", "company_id");
+            using (var conn = new NpgsqlConnection(ConString))
+            {
+                return Task.FromResult(conn.Execute(sql, entity) == 1);
+            }
         }
 
         public Task<bool> Delete(int id)
         {
             string sql = DeleteCommand;
-            using (var conn = new NpgsqlConnection())
+            using (var conn = new NpgsqlConnection(ConString))
             {
-                return Task.FromResult(conn.ExecuteAsync(sql,new { Id = id}).Result ==1);
+                return Task.FromResult(conn.ExecuteAsync(sql, new { Id = id }).Result == 1);
             }
         }
 
@@ -51,40 +62,46 @@ namespace Api2DataAccess.Repos.Concrete
         {
 
             string sql = @"Select w.*,c.company_name,p.*,cat.category_name from WarehouseData as wd
-                            inner join Warehouses as w on w.Warehouse_Id = wd.Warehouse_Id 
-                            inner join Companies as c on w.Company_Id = c.Company_Id
-                            inner join Products as p on wd.Product_Id = p.Product_Id
-                            inner join Categories as cat on p.Category_Id = cat.Category_Id
+                            right join Warehouses as w on w.Warehouse_Id = wd.Warehouse_Id 
+                            left join Companies as c on w.Company_Id = c.Company_Id
+                            left join Products as p on wd.Product_Id = p.Product_Id
+                            left join Categories as cat on p.Category_Id = cat.Category_Id
                             ";
             using (var conn = new NpgsqlConnection(ConString))
             {
                 var res = conn.Query<Warehouse, Company, Product, Category, Warehouse>(sql, (w, c, p, cat) =>
                     {
                         w.Company = c;
-                        p.Category = cat;
-                        w.Products.Add(p);
+                        if (p is not null)
+                        {
+                            w.Products = new List<Product>();
+                            p.Category = cat;
+                            w.Products.Add(p);
+                        }
                         return w;
                     }, splitOn: "Company_Id,Product_Id,Category_Id");
 
                 res = res.GroupBy(x => x.Id)
-                      .Select(x => 
+                      .Select(x =>
                       {
                           var first = x.First();
-                          first.Products = x.Select(x => x.Products.FirstOrDefault()).ToList();
+                          if (first.Products != null)
+                              first.Products = x.Select(x => x.Products.FirstOrDefault()).ToList();
+                          else first.Products = new List<Product>();
                           return first;
                       });
                 return res;
             }
         }
-        
+
 
         public Task<Warehouse> GetById(int id)
         {
             string sql = @"Select w.*,c.company_name,p.*,cat.category_name from WarehouseData as wd
-                            inner join Warehouses as w on w.Warehouse_Id = wd.Warehouse_Id 
-                            inner join Companies as c on w.Company_Id = c.Company_Id
-                            inner join Products as p on wd.Product_Id = p.Product_Id
-                            inner join Categories as cat on p.Category_Id = cat.Category_Id
+                            right join Warehouses as w on w.Warehouse_Id = wd.Warehouse_Id 
+                            left join Companies as c on w.Company_Id = c.Company_Id
+                            left join Products as p on wd.Product_Id = p.Product_Id
+                            left join Categories as cat on p.Category_Id = cat.Category_Id
                             where w.warehouse_id =@Id
                             ";
             using (var conn = new NpgsqlConnection(ConString))
@@ -92,16 +109,23 @@ namespace Api2DataAccess.Repos.Concrete
                 var res = conn.Query<Warehouse, Company, Product, Category, Warehouse>(sql, (w, c, p, cat) =>
                 {
                     w.Company = c;
-                    p.Category = cat;
-                    w.Products.Add(p);
+                    if (p is not null)
+                    {
+                        w.Products = new List<Product>();
+                        p.Category = cat;
+                        w.Products.Add(p);
+                    }
+
                     return w;
-                }, splitOn: "Company_Id,Product_Id,Category_Id",param: new {Id = id });
+                }, splitOn: "Company_Id,Product_Id,Category_Id", param: new { Id = id });
 
                 var result = res.GroupBy(x => x.Id)
                       .Select(x =>
                       {
                           var first = x.First();
-                          first.Products = x.Select(x => x.Products.FirstOrDefault()).ToList();
+                          if (first.Products is not null)
+                              first.Products = x.Select(x => x.Products.FirstOrDefault()).ToList();
+                          else first.Products = new List<Product>();
                           return first;
                       }).FirstOrDefault();
                 return Task.FromResult(result);

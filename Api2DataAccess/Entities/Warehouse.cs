@@ -12,7 +12,6 @@ namespace Api2DataAccess.Entities
     {
         public Warehouse()
         {
-            Products = new List<Product>();
         }
         public int Id { get; set; }
         public string Name { get; set; }

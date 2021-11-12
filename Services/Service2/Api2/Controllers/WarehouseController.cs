@@ -44,6 +44,12 @@ namespace Api2.Controllers
             var res = await Mediator.Send(com);
             return Ok(res);
         }
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateWarehouseCommand com)
+        {
+            var res = await Mediator.Send(com);
+            return Ok(res);
+        }
         [HttpDelete]
         public async Task<IActionResult> Delete(CommonDeleteCommand com)
         {

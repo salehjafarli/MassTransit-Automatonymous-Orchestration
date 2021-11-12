@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Api2DataAccess\Api2DataAccess.csproj" />
     <ProjectReference Include="..\Api2Business\Api2Business.csproj" />
   </ItemGroup>
 

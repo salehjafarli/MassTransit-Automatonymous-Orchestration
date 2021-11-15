@@ -1,4 +1,5 @@
 ﻿using Api2Business.Consumers.Category;
+using Api2Business.Consumers.Product;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -20,6 +21,12 @@ namespace Api2Business.Extensions
                     cfg.ConfigureEndpoints(context);
                 });
                 x.AddConsumer<CategoryCreatedConsumer>();
+                x.AddConsumer<CategoryUpdatedConsumer>();
+                x.AddConsumer<CategoryDeletedConsumer>();
+
+                x.AddConsumer<ProductCreatedConsumer>();
+                x.AddConsumer<ProductUpdatedConsumer>();
+                x.AddConsumer<ProductDeletedConsumer>();
             });
 
             Services.AddMassTransitHostedService();

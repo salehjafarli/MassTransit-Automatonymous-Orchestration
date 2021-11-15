@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Api2DataAccess.Repos.Abstract
 {
-    interface IProductRepository : ICrud<Product>
+    public interface IProductRepository : ICrud<Product>
     {
     }
 }

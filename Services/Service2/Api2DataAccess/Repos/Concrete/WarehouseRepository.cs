@@ -27,7 +27,7 @@ namespace Api2DataAccess.Repos.Concrete
         }
         public Task<bool> Create(Warehouse entity)
         {
-            var sql = InsertCommand("company,products", "company_id");
+            var sql = InsertCommand("company,products,id", "company_id");
             using (var conn = new NpgsqlConnection(ConString))
             {
                 bool res1 = conn.Execute(sql,
@@ -42,10 +42,15 @@ namespace Api2DataAccess.Repos.Concrete
         }
         public Task<bool> Update(Warehouse entity)
         {
-            var sql = UpdateCommand("company,products", "company_id");
+            var sql = UpdateCommand("company,products,id", "company_id");
             using (var conn = new NpgsqlConnection(ConString))
             {
-                return Task.FromResult(conn.Execute(sql, entity) == 1);
+                return Task.FromResult(conn.Execute(sql, new
+                {
+                    name = entity.Name,
+                    adress = entity.Adress,
+                    company_id = entity.Company.Id
+                }) == 1);
             }
         }
 

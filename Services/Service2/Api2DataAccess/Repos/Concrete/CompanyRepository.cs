@@ -22,7 +22,7 @@ namespace Api2DataAccess.Repos.Concrete
 
         public async Task<bool> Create(Company entity)
         {
-            string sql = InsertCommand();
+            string sql = InsertCommand("id");
             using (var con = new NpgsqlConnection(ConString))
             {
 
@@ -63,7 +63,7 @@ namespace Api2DataAccess.Repos.Concrete
 
         public async Task<bool> Update(Company entity)
         {
-            string sql = UpdateCommand();
+            string sql = UpdateCommand("id");
             using (var con = new NpgsqlConnection(ConString))
             {
                 return await con.ExecuteAsync(sql, entity) == 1;

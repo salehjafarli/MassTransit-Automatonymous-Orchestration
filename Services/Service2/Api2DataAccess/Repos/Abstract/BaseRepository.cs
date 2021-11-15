@@ -42,7 +42,7 @@ namespace Api2DataAccess.Repos.Abstract
             { 
                 var name =$"{EntityType.Name}_{item.Name}";
                 var name2 = $"{item.Name}";
-                if (item.Name.ToLower() != "id" && !excluded.Contains(item.Name.ToLower()))
+                if (!excluded.Contains(item.Name.ToLower()))
                 {
                     qp1 += name + ",";
                     qp2 += "@" + name2 + ",";
@@ -70,7 +70,7 @@ namespace Api2DataAccess.Repos.Abstract
             {
                 var name = $"{EntityType.Name}_{item.Name}";
                 var name2 = $"{item.Name}";
-                if (item.Name.ToLower() != "id" && !excluded.Contains(item.Name.ToLower()))
+                if (!excluded.Contains(item.Name.ToLower()))
                 {
                     qp += $"{name} = @{name2},";
                 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MediatR;
+using Services.Common.Models.Response;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Api1Business.Models.Queries.Category
 {
-    public class GetCategoryByIdQuery
+    public class GetCategoryByIdQuery : IRequest<CategoryResponse>
     {
-        //todo
+        public int Id { get; set; }
+        
     }
 }

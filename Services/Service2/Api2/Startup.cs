@@ -35,6 +35,7 @@ namespace Api2
             services.AddScoped<ICompanyRepository>(x=> new CompanyRepository(constring));
             services.AddScoped<IWarehouseRepository>(x => new WarehouseRepository(constring));
             services.AddScoped<ICategoryRepository>(x => new CategoryRepository(constring));
+            services.AddScoped<IProductRepository>(x => new ProductRepository(constring));
             services.InjectMassTransit();
             services.AddControllers();
             services.AddSwaggerGen(c =>

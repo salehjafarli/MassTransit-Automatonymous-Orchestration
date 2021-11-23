@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api1Business.Models.Queries
+namespace Api1Core.Models.Queries
 {
     public class CommonQuery<T> : IRequest<ICollection<T>>
     {

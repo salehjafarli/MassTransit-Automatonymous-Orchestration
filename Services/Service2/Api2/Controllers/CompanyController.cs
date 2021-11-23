@@ -1,7 +1,7 @@
-﻿using Api2Business.Models.Comands;
-using Api2Business.Models.Comands.Company;
-using Api2Business.Models.Queries;
-using Api2Business.Models.Queries.Company;
+﻿using Api2Core.Models.Comands;
+using Api2Core.Models.Comands.Company;
+using Api2Core.Models.Queries;
+using Api2Core.Models.Queries.Company;
 using Api2DataAccess.Entities;
 using Api2DataAccess.Repos.Abstract;
 using MediatR;

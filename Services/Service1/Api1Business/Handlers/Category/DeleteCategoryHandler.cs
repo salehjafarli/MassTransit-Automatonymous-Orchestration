@@ -1,4 +1,4 @@
-﻿using Api1Business.Models.Commands.Category;
+﻿using Api1Core.Models.Commands.Category;
 using Api1DataAccess.EFCore;
 using MassTransit;
 using MediatR;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Api1Business.Handlers.Category
+namespace Api1Core.Handlers.Category
 {
     class DeleteCategoryHandler : IRequestHandler<DeleteCategoryCommand, bool>
     {

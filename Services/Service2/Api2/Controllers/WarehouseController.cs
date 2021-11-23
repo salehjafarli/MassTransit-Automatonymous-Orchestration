@@ -1,6 +1,6 @@
-﻿using Api2Business.Models.Comands;
-using Api2Business.Models.Comands.Warehouse;
-using Api2Business.Models.Queries.Warehouse;
+﻿using Api2Core.Models.Comands;
+using Api2Core.Models.Comands.Warehouse;
+using Api2Core.Models.Queries.Warehouse;
 using Api2DataAccess.Entities;
 using Api2DataAccess.Repos.Abstract;
 using MediatR;

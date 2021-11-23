@@ -1,5 +1,5 @@
-﻿using Api1Business.Models.Commands.Category;
-using Api1Business.Models.Queries.Category;
+﻿using Api1Core.Models.Queries.Category;
+using Api1Core.Models.Commands.Category;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

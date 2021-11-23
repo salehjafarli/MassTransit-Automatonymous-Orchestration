@@ -1,4 +1,4 @@
-﻿using Api1Business.Models.Commands.Product;
+﻿using Api1Core.Models.Commands.Product;
 using Api1DataAccess.EFCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +10,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Api1Business.Handlers.Product
+namespace Api1Core.Handlers.Product
 {
-    public class  UpdateProductHandler : IRequestHandler<UpdateProductCommand, bool>
+    public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, bool>
     {
         public UpdateProductHandler(Api1DbContext Context)
         {

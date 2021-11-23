@@ -1,4 +1,4 @@
-using Api2Business.Handlers.Company;
+using Api2Core.Handlers.Company;
 using Api2DataAccess.Repos.Abstract;
 using Api2DataAccess.Repos.Concrete;
 using Microsoft.AspNetCore.Builder;
@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
-using Api2Business.Extensions;
+using Api2Core.Extensions;
 
 namespace Api2
 {

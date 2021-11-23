@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api1Business.Models.Queries.Category
+namespace Api1Core.Models.Queries.Category
 {
     public class GetAllCategoryQuery : CommonQuery<CategoryResponse>
     {

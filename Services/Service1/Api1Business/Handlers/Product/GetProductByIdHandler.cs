@@ -1,4 +1,4 @@
-﻿using Api1Business.Models.Queries.Product;
+﻿using Api1Core.Models.Queries.Product;
 using Api1DataAccess.EFCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Api1Business.Handlers.Product
+namespace Api1Core.Handlers.Product
 {
     public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductResponse>
     {
@@ -24,12 +24,12 @@ namespace Api1Business.Handlers.Product
         public async Task<ProductResponse> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var product = await Context.Products.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == request.Id);
-            TinyMapper.Bind<Api1DataAccess.EFCore.Product, ProductResponse>(cfg => 
+            TinyMapper.Bind<Api1DataAccess.EFCore.Product, ProductResponse>(cfg =>
             {
                 cfg.Ignore(x => x.Category.Products);
             });
             return TinyMapper.Map<ProductResponse>(product);
-                                                   
+
         }
     }
 }

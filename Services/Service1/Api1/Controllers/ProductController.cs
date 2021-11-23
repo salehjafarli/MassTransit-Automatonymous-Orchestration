@@ -1,6 +1,5 @@
-﻿using Api1Business.Models.Commands.Product;
-using Api1Business.Models.Queries.Product;
-using Api1DataAccess.EFCore;
+﻿using Api1Core.Models.Commands.Product;
+using Api1Core.Models.Queries.Product;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

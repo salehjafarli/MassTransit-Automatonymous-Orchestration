@@ -1,4 +1,4 @@
-﻿using Api1Business.Models.Queries.Category;
+﻿using Api1Core.Models.Queries.Category;
 using Api1DataAccess.EFCore;
 using MediatR;
 using Nelibur.ObjectMapper;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Api1Business.Handlers.Category
+namespace Api1Core.Handlers.Category
 {
     public class GetCategoryByIdHandler : IRequestHandler<GetCategoryByIdQuery, CategoryResponse>
     {

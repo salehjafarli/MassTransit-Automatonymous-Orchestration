@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api1Business.Models.Commands.Category
+namespace Api1Core.Models.Commands.Category
 {
     public class UpdateCategoryCommand : IRequest<bool>
     {
-        public int  Id { get; set; }
-        public string  Name { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

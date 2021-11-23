@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api1Business\Api1Business.csproj" />
+    <ProjectReference Include="..\Api1Business\Api1Core.csproj" />
     <ProjectReference Include="..\Api1DataAccess\Api1DataAccess.csproj" />
   </ItemGroup>
 

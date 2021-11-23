@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api2Business.Consumers.Product
+namespace Api2Core.Consumers.Product
 {
     class ProductCreatedConsumer : IConsumer<ProductCreated>
     {

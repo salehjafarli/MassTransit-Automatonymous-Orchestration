@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api2Business.Consumers.Category
+namespace Api2Core.Consumers.Category
 {
-    class CategoryCreatedConsumer : IConsumer<CategoryCreated>
+    class CategoryConsumer : IConsumer<CategoryCreated>, IConsumer<CategoryUpdated>, IConsumer<CategoryDeleted>
     {
-        public CategoryCreatedConsumer(ICategoryRepository Repo)
+        public CategoryConsumer(ICategoryRepository Repo)
         {
             this.Repo = Repo;
             TinyMapper.Bind<CategoryCreated, Api2DataAccess.Entities.Category>();
@@ -25,6 +25,18 @@ namespace Api2Business.Consumers.Category
             var entity =  TinyMapper.Map<Api2DataAccess.Entities.Category>(context.Message);
 
             await Repo.Create(entity);
+        }
+
+        public async Task Consume(ConsumeContext<CategoryUpdated> context)
+        {
+            var entity = TinyMapper.Map<Api2DataAccess.Entities.Category>(context.Message);
+            await Repo.Update(entity);
+        }
+
+        public async Task Consume(ConsumeContext<CategoryDeleted> context)
+        {
+            int id = context.Message.Id;
+            await Repo.Delete(id);
         }
     }
 }

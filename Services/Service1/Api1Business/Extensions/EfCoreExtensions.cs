@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api1Business.Extensions
+namespace Api1Core.Extensions
 {
     public static class EfCoreExtensions
     {

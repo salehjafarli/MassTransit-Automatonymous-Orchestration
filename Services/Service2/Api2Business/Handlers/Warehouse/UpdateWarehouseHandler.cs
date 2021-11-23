@@ -1,4 +1,4 @@
-﻿using Api2Business.Models.Comands.Warehouse;
+﻿using Api2Core.Models.Comands.Warehouse;
 using Api2DataAccess.Repos.Abstract;
 using MediatR;
 using Nelibur.ObjectMapper;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Api2Business.Handlers.Warehouse
+namespace Api2Core.Handlers.Warehouse
 {
     public class UpdateWarehouseHandler : IRequestHandler<UpdateWarehouseCommand,bool>
     {

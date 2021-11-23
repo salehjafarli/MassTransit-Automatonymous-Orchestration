@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Services.Common.Events.Category
 {
-    public class CategoryCreated
+    public class CategoryCreated : Event
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
     }
 }

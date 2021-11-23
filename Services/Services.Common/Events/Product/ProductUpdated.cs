@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.Common.Events.Product
 {
-    public class ProductUpdated
+    public class ProductUpdated : Event
     {
         public int Id { get; set; }
         public string Name { get; set; }

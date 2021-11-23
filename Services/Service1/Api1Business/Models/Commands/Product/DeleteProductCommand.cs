@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api1Business.Models.Commands.Product
+namespace Api1Core.Models.Commands.Product
 {
     public class DeleteProductCommand : IRequest<bool>
     {

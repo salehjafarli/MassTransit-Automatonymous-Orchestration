@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api2Business.Models.Comands.Warehouse
+namespace Api2Core.Models.Comands.Warehouse
 {
     public class UpdateWarehouseCommand : IRequest<bool>
     {

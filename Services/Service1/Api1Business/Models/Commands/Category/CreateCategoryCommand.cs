@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api1Business.Models.Commands.Category
+namespace Api1Core.Models.Commands.Category
 {
     public class CreateCategoryCommand : IRequest<bool>
     {

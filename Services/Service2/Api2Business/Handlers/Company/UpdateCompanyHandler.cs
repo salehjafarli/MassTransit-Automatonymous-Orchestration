@@ -1,4 +1,4 @@
-﻿using Api2Business.Models.Comands.Company;
+﻿using Api2Core.Models.Comands.Company;
 using Api2DataAccess.Repos.Abstract;
 using MediatR;
 using Nelibur.ObjectMapper;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Api2Business.Handlers.Company
+namespace Api2Core.Handlers.Company
 {
     class UpdateCompanyHandler : IRequestHandler<UpdateCompanyCommand, bool>
     {

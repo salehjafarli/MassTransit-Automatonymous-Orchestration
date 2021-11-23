@@ -10,9 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api1Business.Extensions;
+using Api1Core.Extensions;
 using MediatR;
-using Api1Business.Handlers.Product;
+using Api1Core.Handlers.Product;
 
 namespace Api1
 {

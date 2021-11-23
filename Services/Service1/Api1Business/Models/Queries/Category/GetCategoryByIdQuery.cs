@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api1Business.Models.Queries.Category
+namespace Api1Core.Models.Queries.Category
 {
     public class GetCategoryByIdQuery : IRequest<CategoryResponse>
     {
         public int Id { get; set; }
-        
+
     }
 }

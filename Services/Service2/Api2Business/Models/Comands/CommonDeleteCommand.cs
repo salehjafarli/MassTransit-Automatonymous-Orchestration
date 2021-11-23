@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api2Business.Models.Comands
+namespace Api2Core.Models.Comands
 {
     public class CommonDeleteCommand : IRequest<bool>
     {

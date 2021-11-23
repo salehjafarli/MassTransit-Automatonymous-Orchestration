@@ -1,4 +1,4 @@
-﻿using Api2Business.Models.Queries.Warehouse;
+﻿using Api2Core.Models.Queries.Warehouse;
 using Api2DataAccess.Entities;
 using Api2DataAccess.Repos.Abstract;
 using MediatR;
@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace Api2Business.Handlers.Warehouse
+namespace Api2Core.Handlers.Warehouse
 {
     class GetWarehouseByIdHandler : IRequestHandler<GetWarehouseByIdQuery, WarehouseResponse>
     {

@@ -1,12 +1,13 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
+using Services.StateMachines.StateMachines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api1Business.Extensions
+namespace Api1Core.Extensions
 {
     public static class MassTransitExtension
     {
@@ -17,7 +18,9 @@ namespace Api1Business.Extensions
                 x.AddBus(c => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
                     cfg.Host("rabbitmq://localhost");
+                    
                 }));
+                x.AddSagaStateMachine(typeof(CategoryStateMachine));
             });
 
             Services.AddMassTransitHostedService();

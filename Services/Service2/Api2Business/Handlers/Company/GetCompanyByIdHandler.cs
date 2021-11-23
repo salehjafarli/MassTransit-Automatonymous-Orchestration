@@ -1,5 +1,5 @@
 ﻿
-using Api2Business.Models.Queries.Company;
+using Api2Core.Models.Queries.Company;
 using Api2DataAccess.Repos.Abstract;
 using MediatR;
 using Nelibur.ObjectMapper;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Api2Business.Handlers.Company
+namespace Api2Core.Handlers.Company
 {
     public class GetCompanyByIdHandler : IRequestHandler<GetCompanyByIdQuery,CompanyResponse>
     {

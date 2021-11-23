@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Api2Business.Models.Queries.Company
+namespace Api2Core.Models.Queries.Company
 {
     public class GetCompanyByIdQuery : IRequest<CompanyResponse>
     {

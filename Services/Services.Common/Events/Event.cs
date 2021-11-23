@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Common.Events.Category
+namespace Services.Common.Events
 {
-    public class CategoryDeleted : Event
+    public abstract class Event
     {
-        public int Id { get; set; }
+        public Guid CorrelationId => Guid.NewGuid();
     }
 }

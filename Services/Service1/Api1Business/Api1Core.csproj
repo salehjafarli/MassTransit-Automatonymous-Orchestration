@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Services.StateMachines\Services.StateMachines.csproj" />
     <ProjectReference Include="..\..\Services.Common\Services.Common.csproj" />
     <ProjectReference Include="..\Api1DataAccess\Api1DataAccess.csproj" />
   </ItemGroup>

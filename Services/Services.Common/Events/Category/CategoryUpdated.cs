@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.Common.Events.Category
 {
-    public class CategoryUpdated
+    public class CategoryUpdated : Event
     {
         public int Id { get; set; }
         public string  Name { get; set; }

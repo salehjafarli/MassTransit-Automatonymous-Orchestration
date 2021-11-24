@@ -111,7 +111,7 @@ namespace Api2DataAccess.Repos.Concrete
                             ";
             using (var conn = new NpgsqlConnection(ConString))
             {
-                var res = conn.Query<Warehouse, Company, Product, Category, Warehouse>(sql, (w, c, p, cat) =>
+                var res = conn.Query<Warehouse, Company, WarehouseProduct, Category, Warehouse>(sql, (w, c, p, cat) =>
                 {
                     w.Company = c;
                     if (p is not null)

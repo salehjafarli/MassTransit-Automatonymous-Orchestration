@@ -1,6 +1,5 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using Services.StateMachines.StateMachines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,6 @@ namespace Api1Core.Extensions
                     cfg.Host("rabbitmq://localhost");
                     
                 }));
-                x.AddSagaStateMachine(typeof(CategoryStateMachine));
             });
 
             Services.AddMassTransitHostedService();

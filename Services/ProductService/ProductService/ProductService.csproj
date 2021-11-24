@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api1Business\Api1Core.csproj" />
-    <ProjectReference Include="..\Api1DataAccess\Api1DataAccess.csproj" />
+    <ProjectReference Include="..\Api1Business\ProductService.Core.csproj" />
+    <ProjectReference Include="..\Api1DataAccess\ProductService.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

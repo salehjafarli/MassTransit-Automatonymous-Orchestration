@@ -12,6 +12,6 @@ namespace Services.Common.Models.Response
         public string Name { get; set; }
         public string Adress { get; set; }
         public CompanyResponse Company { get; set; }
-        public List<ProductResponse> Products { get; set; }
+        public List<WarehouseProductResponse> Products { get; set; }
     }
 }

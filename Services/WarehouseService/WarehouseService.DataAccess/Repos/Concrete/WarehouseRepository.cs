@@ -19,7 +19,7 @@ namespace Api2DataAccess.Repos.Concrete
         public WarehouseRepository(string ConString) : base(ConString, "Warehouses", typeof(Warehouse))
         {
             DapperCustomMap.SetFor<Category>();
-            DapperCustomMap.SetFor<Product>();
+            DapperCustomMap.SetFor<Product>("product");
             DapperCustomMap.SetFor<Company>();
             DapperCustomMap.SetFor<Warehouse>();
 
@@ -66,7 +66,7 @@ namespace Api2DataAccess.Repos.Concrete
         public async Task<IEnumerable<Warehouse>> GetAll()
         {
 
-            string sql = @"Select w.*,c.company_name,p.*,cat.category_name from WarehouseData as wd
+            string sql = @"Select w.*,c.company_name,p.*,wd.product_amount,cat.category_name from WarehouseData as wd
                             right join Warehouses as w on w.Warehouse_Id = wd.Warehouse_Id 
                             left join Companies as c on w.Company_Id = c.Company_Id
                             left join Products as p on wd.Product_Id = p.Product_Id
@@ -74,12 +74,12 @@ namespace Api2DataAccess.Repos.Concrete
                             ";
             using (var conn = new NpgsqlConnection(ConString))
             {
-                var res = conn.Query<Warehouse, Company, Product, Category, Warehouse>(sql, (w, c, p, cat) =>
+                var res = conn.Query<Warehouse, Company, WarehouseProduct, Category, Warehouse>(sql, (w, c, p, cat) =>
                     {
                         w.Company = c;
                         if (p is not null)
                         {
-                            w.Products = new List<Product>();
+                            w.Products = new List<WarehouseProduct>();
                             p.Category = cat;
                             w.Products.Add(p);
                         }
@@ -92,7 +92,7 @@ namespace Api2DataAccess.Repos.Concrete
                           var first = x.First();
                           if (first.Products != null)
                               first.Products = x.Select(x => x.Products.FirstOrDefault()).ToList();
-                          else first.Products = new List<Product>();
+                          else first.Products = new List<WarehouseProduct>();
                           return first;
                       });
                 return res;
@@ -102,7 +102,7 @@ namespace Api2DataAccess.Repos.Concrete
 
         public Task<Warehouse> GetById(int id)
         {
-            string sql = @"Select w.*,c.company_name,p.*,cat.category_name from WarehouseData as wd
+            string sql = @"Select w.*,c.company_name,p.*,wd.product_amount,cat.category_name from WarehouseData as wd
                             right join Warehouses as w on w.Warehouse_Id = wd.Warehouse_Id 
                             left join Companies as c on w.Company_Id = c.Company_Id
                             left join Products as p on wd.Product_Id = p.Product_Id
@@ -116,7 +116,7 @@ namespace Api2DataAccess.Repos.Concrete
                     w.Company = c;
                     if (p is not null)
                     {
-                        w.Products = new List<Product>();
+                        w.Products = new List<WarehouseProduct>();
                         p.Category = cat;
                         w.Products.Add(p);
                     }
@@ -130,7 +130,7 @@ namespace Api2DataAccess.Repos.Concrete
                           var first = x.First();
                           if (first.Products is not null)
                               first.Products = x.Select(x => x.Products.FirstOrDefault()).ToList();
-                          else first.Products = new List<Product>();
+                          else first.Products = new List<WarehouseProduct>();
                           return first;
                       }).FirstOrDefault();
                 return Task.FromResult(result);

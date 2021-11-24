@@ -8,8 +8,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Api2Business\Api2Core.csproj" />
-  </ItemGroup>
-
 </Project>

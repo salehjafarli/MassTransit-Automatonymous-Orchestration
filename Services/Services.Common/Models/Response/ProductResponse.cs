@@ -13,4 +13,8 @@ namespace Services.Common.Models.Response
         public double Cost { get; set; }
         public virtual CategoryResponse Category { get; set; }
     }
+    public class WarehouseProductResponse : ProductResponse
+    {
+        public int Amount { get; set; }
+    }
 }

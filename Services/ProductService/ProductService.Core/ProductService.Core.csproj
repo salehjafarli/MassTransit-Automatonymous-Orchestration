@@ -5,16 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MassTransit.AspNetCore" Version="7.2.4" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.2.4" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="TinyMapper" Version="3.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Services.StateMachines\Services.StateMachines.csproj" />
     <ProjectReference Include="..\..\Services.Common\Services.Common.csproj" />
-    <ProjectReference Include="..\Api2DataAccess\Api2DataAccess.csproj" />
+    <ProjectReference Include="..\Api1DataAccess\ProductService.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

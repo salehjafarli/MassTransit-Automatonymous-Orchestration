@@ -10,7 +10,13 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MediatR;
 using System.Threading.Tasks;
+using MassTransit;
+using Order.StateMachines;
+using Statemachines = Order.StateMachines;
+using OrderService.Core.CommandHandlers;
+using MassTransit.Saga;
 
 namespace Api3
 {
@@ -26,7 +32,21 @@ namespace Api3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMassTransit(x =>
+            {
+                x.AddBus(c => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    cfg.Host("rabbitmq://localhost");
+                    cfg.ReceiveEndpoint(cfg =>
+                    {
+                         cfg.StateMachineSaga(new OrderStateMachine(),new InMemorySagaRepository<Statemachines.Order>());
+                    });
 
+                }));
+            });
+            services.AddMediatR(typeof(OrderCommandHandler));
+
+            services.AddMassTransitHostedService();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

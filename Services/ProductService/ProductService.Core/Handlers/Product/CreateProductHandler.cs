@@ -29,7 +29,6 @@ namespace Api1Core.Handlers.Product
 
         public async Task<bool> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            //implement masstransit logic for syncing microservice databases
             var TempProduct = TinyMapper.Map<Api1DataAccess.EFCore.Product>(request);
             var res = Context.Products.Add(TempProduct);
             if (res.State == EntityState.Added)

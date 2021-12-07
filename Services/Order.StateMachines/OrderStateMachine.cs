@@ -21,28 +21,33 @@ namespace Order.StateMachines
                 When(OrderCreated)
                 .Then(context =>
                 {
-                    throw new Exception("test");
+                    context.Instance.ProductId = context.Data.ProductId;
+                    context.Instance.CompanyId = context.Data.CompanyId;
+                    context.Instance.CardDetails = context.Data.CardDetails;
                 })
                 .TransitionTo(Registered)
-                .Publish(x => new CheckProductAvailability())
+                .Publish(context => new CheckProductAvailability()
+                {
+                    CompanyId = context.Instance.CompanyId,
+                    ProductId = context.Instance.ProductId
+                })
             );
 
             During(Registered,
                 When(OrderProductIsAvailable)
                 .Then(context =>
                 {
-
                 })
-                .TransitionTo(WaitForPruchase)
-                .Publish(x => new PurchaseOrder()),
+                .TransitionTo(WaitForPurchase)
+                .Publish(context => new PurchaseOrder() {CardDetails = context.Instance.CardDetails }),
                When(OrderRejected)
                 .Then(context =>
                 {
-
+                       
                 })
                 .Finalize()
             );
-            During(WaitForPruchase,
+            During(WaitForPurchase,
                 When(OrderPurchased)
                 .Then(context => 
                 {
@@ -56,7 +61,7 @@ namespace Order.StateMachines
 
 
         public State Registered { get; set; }
-        public State WaitForPruchase { get; set; }
+        public State WaitForPurchase { get; set; }
         public Event<OrderCreated> OrderCreated { get; set; }
         public Event<OrderProductIsAvailable> OrderProductIsAvailable { get; set; }
         public Event<OrderPurchased> OrderPurchased { get; set; }

@@ -8,6 +8,6 @@ namespace Services.Common.Events.Order
 {
     public class OrderRejected : Event
     {
-
+        public string RejectReason { get; set; }
     }
 }

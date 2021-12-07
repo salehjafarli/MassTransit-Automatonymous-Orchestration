@@ -39,7 +39,7 @@ namespace Api3
                     cfg.Host("rabbitmq://localhost");
                     cfg.ReceiveEndpoint(cfg =>
                     {
-                         cfg.StateMachineSaga(new OrderStateMachine(),new InMemorySagaRepository<Statemachines.Order>());
+                        cfg.StateMachineSaga(new OrderStateMachine(),new InMemorySagaRepository<Statemachines.Order>());
                     });
 
                 }));

@@ -18,6 +18,7 @@ namespace Api1Core.Extensions
                 {
                     cfg.Host("rabbitmq://localhost");
                     
+                    
                 }));
             });
 

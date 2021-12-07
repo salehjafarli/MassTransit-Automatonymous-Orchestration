@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarehouseService.Core.Consumers.Product;
 
 namespace Api2Core.Extensions
 {
@@ -24,7 +25,7 @@ namespace Api2Core.Extensions
                     
                 });
                 x.AddConsumer<CategoryConsumer>();
-
+                x.AddConsumer<OrderProductConsumer>();
                 x.AddConsumer<ProductCreatedConsumer>();
                 x.AddConsumer<ProductUpdatedConsumer>();
                 x.AddConsumer<ProductDeletedConsumer>();

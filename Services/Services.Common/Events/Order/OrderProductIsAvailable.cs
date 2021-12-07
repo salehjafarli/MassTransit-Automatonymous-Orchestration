@@ -8,5 +8,6 @@ namespace Services.Common.Events.Order
 {
     public class OrderProductIsAvailable : Event
     {
+
     }
 }

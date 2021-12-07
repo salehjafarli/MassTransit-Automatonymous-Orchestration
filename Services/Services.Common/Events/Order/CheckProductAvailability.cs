@@ -8,5 +8,7 @@ namespace Services.Common.Events.Order
 {
     public class CheckProductAvailability : Event
     {
+        public int ProductId { get; set; }
+        public int CompanyId { get; set; }
     }
 }
